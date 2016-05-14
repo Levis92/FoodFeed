@@ -29,8 +29,8 @@ class FoodFeed extends Component {
           initialRoute={{
             component: Main,
             title: 'Welcome!',
-            navigationBarHidden:true,
-            passProps: { myProp: 'foo' }
+            passProps: { myProp: 'foo' },
+            navigationBarHidden:true
           }}
         />
       );
@@ -108,8 +108,8 @@ class Main extends Component {
       AsyncStorage.setItem('username', res.userName)
       AsyncStorage.setItem('loginToken', res.access_token);
       AsyncStorage.setItem('loginTokenExpires', res[".expires"].toString());
-      this.props.navigator.push({title:'Feed',component:Feed,passProps:{navigator:this.props.navigator,feedType:'feed'}},0)
-    })
+      this.props.navigator.push({title:'Feed',component:Feed,passProps:{navigationBarHidden:false,navigator:this.props.navigator,feedType:'feed',}},0);
+  })
     .done();
   }
 }
@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   thumbnail: {
+    marginTop:50,
     width: 380,
     height:250
   },

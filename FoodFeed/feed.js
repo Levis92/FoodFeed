@@ -9,15 +9,9 @@ import {
   AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import FaIcon from 'react-native-vector-icons/FontAwesome';
 var Recipe = require('./Recipe.js')
 const BASE_URL = 'https://foodfeed.azurewebsites.net';
-
-var MOCK_RECIPES= [
-  {id:'123', title: 'Soppa', creator:{username:"Simon",userid:"1234"}, createdAt: "32 min ago",likeCount:5,liked:false,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'https://images.kitchenstories.de/recipeImages/04_25_AmericanApplePie_final.jpg'}},
-  {id:'124', title: 'Sten', creator:{username:"Pär",userid:"1235"}, createdAt: "50 min ago",likeCount:10,liked:true,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'https://images.kitchenstories.de/recipeImages/04_25_AmericanApplePie_final.jpg'}},
-  {id:'125', title: 'Sture', creator:{username:"John",userid:"1236"}, createdAt: "3 days ago",likeCount:17,liked:false,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'https://images.kitchenstories.de/recipeImages/04_25_AmericanApplePie_final.jpg'}},
-  {id:'126', title: 'Säng', creator:{username:"Erik",userid:"1237"}, createdAt: new Date(),likeCount:1,liked:false,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}},
-];
 
 class Feed extends Component {
   constructor(props) {
@@ -144,6 +138,7 @@ class Feed extends Component {
         <View style={styles.bottomContainer}>
           <Text style={styles.title}>{recipe.Name}</Text>
           <View style={styles.timeBox}>
+            <Text style={styles.retweet}><FaIcon name="retweet" color="#12311C" size={25} /> </Text>
             <Text style={styles.createdAtLogo}><Icon name="ios-clock-outline" color="#12311C" size={25} /></Text>
             <Text style={styles.createdAt}> {recipe.Created.toString()}</Text>
           </View>
