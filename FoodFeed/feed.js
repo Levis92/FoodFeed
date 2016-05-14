@@ -79,7 +79,7 @@ class Feed extends Component {
     return(
       <View style={styles.container}>
         <View style={styles.topContainer}>
-          <Text style={styles.username}>{recipe.User.Name}</Text>
+          <Text style={styles.username}>Hej</Text>
           <View style={styles.likeBox}>
             <Text style={styles.likeHeart}><Icon name={recipe.HasLiked?'ios-heart':'ios-heart-outline'} color="#12311C" size={25} /></Text>
             <Text style={styles.likeCount}> {recipe.Likes}</Text>

@@ -11,12 +11,14 @@ import {
   View,
   Image,
   TabBarIOS,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 var FBLogin = require('react-native-facebook-login');
 var RecipeIngredients = require('./RecipeIngredients.js');
 var RecipeAbout = require('./RecipeAbout.js');
+const BASE_URL = 'https://foodfeed.azurewebsites.net';
 var MOCK_RECIPE= [
   {id:'123', description:'En mustig soppa med mycket grönsaker', title: 'Soppa', duration:'35', creator:{username:"Simon",userid:"1234"}, createdAt: new Date(),likeCount:5,image: {full:'http://i.imgur.com/Gze1KMo.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}}
 ];
@@ -29,18 +31,46 @@ class Recipe extends Component {
     this.state = {
       selectedTab: 'aboutTab',
       likeIcon: 'ios-heart-outline',
-      innerContent: <RecipeAbout recipe={MOCK_RECIPE[0]} />,  
-      recipe: MOCK_RECIPE[0]  
+      recipe:null
     };
+    this.fetchRecipe(props.recipe).then(
+      (recipe)=>{
+        this.setState({
+          innerContent: <RecipeAbout recipe={recipe} />,  
+          recipe: recipe 
+        });
+        this.forceUpdate();
+      }
+    )
   }
-  
+  fetchRecipe (recipeId) {
+    var p = new Promise((reso,rej)=>{
+      AsyncStorage.getItem('loginToken')
+        .then((token) => {
+          if (token) {
+            var REQUEST_URL = BASE_URL + "/api/recipe/"+recipeId;
+            myInit = {
+              headers:{"Authorization":"bearer "+token}
+            }
+            fetch(REQUEST_URL,myInit)
+              .then((response) => response.json())
+              .then((responseData) => {
+                console.log(responseData);
+                reso(responseData);
+              })
+              .done();
+          } else {
+            resolve({loggedIn: false});
+          }
+        });
+    });
+    return p;
+  }
   _setLike() {
     if(this.state.likeIcon == 'ios-heart-outline'){
-      console.log("it is outline");
       this.state.likeIcon = 'ios-heart';
       this.forceUpdate();
     } else {
-      console.log("it is NOT outline");
       this.state.likeIcon = 'ios-heart-outline';
       this.forceUpdate();
     }
@@ -57,12 +87,16 @@ class Recipe extends Component {
   }
   
   render() {
+    if(!this.state.recipe){
+          console.log('res is null: ',this.state);
+      return (<View><Text>Loading.</Text></View>)
+    }
     return (
       <View style={styles.container}>
-        <Image style={styles.image} source={{uri: this.state.recipe.image.full}}>
+        <Image style={styles.image} source={{uri: this.state.recipe.ImageUrl}}>
           <View style={styles.backdropView}>
             <Text style={styles.user}>
-              @{this.state.recipe.creator.username}
+              @{this.state.recipe.User.Name}
             </Text>
             <TouchableOpacity onPress={() => this._setLike()}>
               <Text style={styles.likeHeart}>
