@@ -30,13 +30,17 @@ class Feed extends Component {
     };
   }
   componentDidMount() {
+        console.log(this.state);
     this.fetchData();
   }
   fetchData () {
     AsyncStorage.getItem('loginToken')
       .then((token) => {
         if (token) {
-          var REQUEST_URL = BASE_URL + "/api/recipe"
+          var REQUEST_URL = BASE_URL + "/api/recipe";
+          if(this.props.feedType=='favorites'){
+            REQUEST_URL+= "/liked";
+          } 
           myInit = {
             headers:{"Authorization":"bearer "+token}
           }
