@@ -14,13 +14,18 @@ class RecipeAbout extends Component {
   }
   render() {    
     return (
-    <View style={styles.flowRight}>
-          <Text style={styles.recipeName}>
-            {this.props.recipe.title}
-          </Text>
-          <Text style={styles.duration}>
-            <Icon name="ios-clock-outline" /> {this.props.recipe.duration} min
-          </Text>
+        <View style={styles.container}>
+            <View style={styles.flowRight}>
+                <Text style={styles.recipeName}>
+                    {this.props.recipe.title}
+                </Text>
+                <Text style={styles.duration}>
+                    <Icon name="ios-clock-outline" /> {this.props.recipe.duration} min
+                </Text>
+            </View>
+            <Text style={styles.recipeName}>
+                {this.props.recipe.description}
+            </Text>
         </View>
       
     );  
