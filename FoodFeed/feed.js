@@ -30,13 +30,17 @@ class Feed extends Component {
     };
   }
   componentDidMount() {
+        console.log(this.state);
     this.fetchData();
   }
   fetchData () {
     AsyncStorage.getItem('loginToken')
       .then((token) => {
         if (token) {
-          var REQUEST_URL = BASE_URL + "/api/recipe"
+          var REQUEST_URL = BASE_URL + "/api/recipe";
+          if(this.props.feedType=='favorites'){
+            REQUEST_URL+= "/liked";
+          } 
           myInit = {
             headers:{"Authorization":"bearer "+token}
           }
@@ -53,6 +57,49 @@ class Feed extends Component {
           resolve({loggedIn: false});
         }
       });
+  }
+  likeRecipe (recipe) {
+    recipe.HasLiked = true;
+    recipe.Likes++;
+    this.forceUpdate();
+    AsyncStorage.getItem('loginToken')
+      .then((token) => {
+        if (token) {
+          var REQUEST_URL = BASE_URL + "/api/recipe/"+recipe.Id+"/like";
+          myInit = {
+            method:"POST",
+            headers:{"Authorization":"bearer "+token}
+          }
+          fetch(REQUEST_URL,myInit)
+            .then((response) => {
+            })
+            .done();
+        } else {
+          resolve({loggedIn: false});
+        }
+      });
+  }
+  dislikeRecipe (recipe) {
+    recipe.HasLiked = false;
+    recipe.Likes--;
+    this.forceUpdate();
+    AsyncStorage.getItem('loginToken')
+      .then((token) => {
+        if (token) {
+          var REQUEST_URL = BASE_URL + "/api/recipe/"+recipe.Id+"/unlike";
+          myInit = {
+            method:"POST",
+            headers:{"Authorization":"bearer "+token}
+          }
+          fetch(REQUEST_URL,myInit)
+            .then((response) => {
+            })
+            .done();
+        } else {
+          resolve({loggedIn: false});
+        }
+      });
+      
   }
   render() {
     if (!this.state.loaded) {
@@ -79,9 +126,11 @@ class Feed extends Component {
     return(
       <View style={styles.container}>
         <View style={styles.topContainer}>
-          <Text style={styles.username}>Hej</Text>
+          <Text style={styles.username}>{recipe.User.Name}</Text>
           <View style={styles.likeBox}>
-            <Text style={styles.likeHeart}><Icon name={recipe.HasLiked?'ios-heart':'ios-heart-outline'} color="#12311C" size={25} /></Text>
+            <TouchableOpacity onPress={()=>{recipe.HasLiked?this.dislikeRecipe(recipe):this.likeRecipe(recipe)}}>
+              <Text style={styles.likeHeart}><Icon name={recipe.HasLiked?'ios-heart':'ios-heart-outline'} color="#12311C" size={25} /></Text>
+            </TouchableOpacity>
             <Text style={styles.likeCount}> {recipe.Likes}</Text>
           </View>
         </View>

@@ -12,7 +12,8 @@ import {
   View,
   NavigatorIOS,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  Image
 } from 'react-native';
 var FBLogin = require('react-native-facebook-login');
 var FBLoginManager = require('NativeModules').FBLoginManager;
@@ -27,8 +28,9 @@ class FoodFeed extends Component {
           style={styles.container}
           initialRoute={{
             component: Main,
-            title: 'Main',
-            passProps: { myProp: 'foo' },
+            title: 'Welcome!',
+            navigationBarHidden:true,
+            passProps: { myProp: 'foo' }
           }}
         />
       );
@@ -57,19 +59,12 @@ class Main extends Component {
       var _this = this;
       return(
         <View style={styles.container}>
-          <TouchableOpacity onPress={() => this.props.navigator.push({title:'Feed',component:Feed,passProps:{navigator:this.props.navigator}})}
-                            onPressOut={() => this.setState({myButtonOpacity: 1})}>
-            <View style={[styles.button, {opacity: this.state.myButtonOpacity}]}>
-              <Text>Feed</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigator.push({title:'Recipe',component:Recipe,passProps:{navigator:this.props.navigator}})}
-                            onPressOut={() => this.setState({myButtonOpacity: 1})}>
-            <View style={[styles.button, {opacity: this.state.myButtonOpacity}]}>
-              <Text>Recipe</Text>
-            </View>
-          </TouchableOpacity>
-          <FBLogin style={{ marginBottom: 10, }}
+          <Image
+            resizeMode="contain"
+            source={require('./logo.png')}
+            style={styles.thumbnail}
+          />
+          <FBLogin style={styles.fbBtn}
             permissions={["email","user_friends"]}
             loginBehavior={FBLoginManager.LoginBehaviors.Native}
             onLogin={(res)=>this.logIn(res.credentials.token)}
@@ -107,14 +102,13 @@ class Main extends Component {
       headers: myHeaders,
       body:s
     };
-    console.log(s);    
     fetch(REQUEST_URL,myInit)
     .then((response) => response.json())
     .then((res) => {
       AsyncStorage.setItem('username', res.userName)
       AsyncStorage.setItem('loginToken', res.access_token);
       AsyncStorage.setItem('loginTokenExpires', res[".expires"].toString());
-      console.log(res);
+      this.props.navigator.push({title:'Feed',component:Feed,passProps:{navigator:this.props.navigator,feedType:'feed'}},0)
     })
     .done();
   }
@@ -125,16 +119,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  thumbnail: {
+    width: 380,
+    height:250
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  fbBtn:{
+    flex:2,
+    marginTop:50,
+    alignSelf:'center'
+  }
+
 });
 
 AppRegistry.registerComponent('FoodFeed', () => FoodFeed);
