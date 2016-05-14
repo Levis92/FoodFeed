@@ -10,58 +10,85 @@ import {
   Text,
   View,
   Image,
-  TabBarIOS
+  TabBarIOS,
+  TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 var FBLogin = require('react-native-facebook-login');
-
+var RecipeIngredients = require('./RecipeIngredients.js');
+var RecipeAbout = require('./RecipeAbout.js');
 var MOCK_RECIPE= [
   {id:'123', title: 'Soppa', duration:'35', creator:{username:"Simon",userid:"1234"}, createdAt: new Date(),likeCount:5,image: {full:'http://i.imgur.com/Gze1KMo.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}}
 ];
+
+
 
 class Recipe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'aboutTab',  
-      recipe: MOCK_RECIPE
+      selectedTab: 'aboutTab',
+      likeIcon: 'ios-heart-outline',
+      innerContent: <RecipeAbout recipe={MOCK_RECIPE[0]} />,  
+      recipe: MOCK_RECIPE[0]  
     };
   }
+  
+  _setLike() {
+    if(this.state.likeIcon == 'ios-heart-outline'){
+      console.log("it is outline");
+      this.state.likeIcon = 'ios-heart';
+      this.forceUpdate();
+    } else {
+      console.log("it is NOT outline");
+      this.state.likeIcon = 'ios-heart-outline';
+      this.forceUpdate();
+    }
+  }
+  _renderAbout() {
+    this.state.innerContent = <RecipeAbout recipe={this.state.recipe} />;
+    this.forceUpdate();
+  }
+    
+  _renderIngredients() {
+    this.state.innerContent = <RecipeIngredients />;
+    this.forceUpdate();  
+    console.log("render ingredients");
+  }
+  
   render() {
-    var recipe = this.state.recipe[0];
     return (
       <View style={styles.container}>
-        <Image style={styles.image} source={{uri: recipe.image.full}}>
+        <Image style={styles.image} source={{uri: this.state.recipe.image.full}}>
           <View style={styles.backdropView}>
             <Text style={styles.user}>
-              @{recipe.creator.username}
+              @{this.state.recipe.creator.username}
             </Text>
-            <Text style={styles.heart}>
-              Hj
-            </Text>
+            <TouchableOpacity onPress={() => this._setLike()}>
+              <Text style={styles.likeHeart}>
+                <Icon name={this.state.likeIcon} color="#12311C" size={25} />
+              </Text>
+            </TouchableOpacity>
           </View>
         </Image>
         <View style={styles.flowRight}>
-          <Text style={styles.tab}>
-            about
-          </Text>
-          <Text style={styles.tab}>
-            ingredients
-          </Text>
-          <Text style={styles.tab}>
-            steps
-          </Text>
+          <TouchableOpacity onPress={() => this._renderAbout()} style={styles.tab}>
+            <Text>
+              about
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this._renderIngredients()} style={styles.tab}>
+            <Text style={styles.tab}>
+              ingredients
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.tab}>
+            <Text style={styles.tab}>
+              steps
+            </Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.flowRight}>
-          <Text style={styles.recipeName}>
-            {recipe.title}
-          </Text>
-          <Text style={styles.duration}>
-            {recipe.duration} min
-          </Text>
-          
-        </View>
-        <FBLogin />
+        {this.state.innerContent}
       </View>
       
     );  
@@ -73,7 +100,7 @@ module.exports = Recipe;
 const styles = StyleSheet.create({
   tab: {
     flex:1,
-    textAlign: "center"
+    alignSelf:  "stretch"
   },
   image: {
     paddingTop: 70,

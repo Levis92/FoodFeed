@@ -6,32 +6,28 @@ import {
   Image,
   TabBarIOS
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-var MOCK_INGREDIENTS = [
-    {name: 'Kaffe', amount: '2 dl'},
-    {name: 'Milk', amount:'1 l'}
-    ]
-class RecipeIngredients extends Component {
+class RecipeAbout extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-        ingredients: MOCK_INGREDIENTS
-    };
   }
-  render() {
-      var ingredient = this.state.ingredients[0];
+  render() {    
     return (
-      <View style={styles.container}>
-        <Text>
-            {ingredient.name}
-        </Text>
-      </View>
+    <View style={styles.flowRight}>
+          <Text style={styles.recipeName}>
+            {this.props.recipe.title}
+          </Text>
+          <Text style={styles.duration}>
+            <Icon name="ios-clock-outline" /> {this.props.recipe.duration} min
+          </Text>
+        </View>
       
     );  
   }
 }
 
-module.exports = RecipeIngredients;
+module.exports = RecipeAbout;
 
 const styles = StyleSheet.create({
   tab: {
