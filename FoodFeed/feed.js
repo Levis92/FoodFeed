@@ -10,10 +10,10 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 var MOCK_RECIPES= [
-  {id:'123', title: 'Soppa', creator:{username:"Simon",userid:"1234"}, createdAt: "32 min ago",likeCount:5,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'https://images.kitchenstories.de/recipeImages/04_25_AmericanApplePie_final.jpg'}},
-  {id:'124', title: 'Sten', creator:{username:"Pär",userid:"1235"}, createdAt: "50 min ago",likeCount:10,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'https://images.kitchenstories.de/recipeImages/04_25_AmericanApplePie_final.jpg'}},
-  {id:'125', title: 'Sture', creator:{username:"John",userid:"1236"}, createdAt: "3 days ago",likeCount:17,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'https://images.kitchenstories.de/recipeImages/04_25_AmericanApplePie_final.jpg'}},
-  {id:'126', title: 'Säng', creator:{username:"Erik",userid:"1237"}, createdAt: new Date(),likeCount:1,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}},
+  {id:'123', title: 'Soppa', creator:{username:"Simon",userid:"1234"}, createdAt: "32 min ago",likeCount:5,liked:false,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'https://images.kitchenstories.de/recipeImages/04_25_AmericanApplePie_final.jpg'}},
+  {id:'124', title: 'Sten', creator:{username:"Pär",userid:"1235"}, createdAt: "50 min ago",likeCount:10,liked:true,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'https://images.kitchenstories.de/recipeImages/04_25_AmericanApplePie_final.jpg'}},
+  {id:'125', title: 'Sture', creator:{username:"John",userid:"1236"}, createdAt: "3 days ago",likeCount:17,liked:false,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'https://images.kitchenstories.de/recipeImages/04_25_AmericanApplePie_final.jpg'}},
+  {id:'126', title: 'Säng', creator:{username:"Erik",userid:"1237"}, createdAt: new Date(),likeCount:1,liked:false,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}},
 ];
 
 class Feed extends Component {
@@ -62,7 +62,10 @@ class Feed extends Component {
       <View style={styles.container}>
         <View style={styles.topContainer}>
           <Text style={styles.title}>{recipe.title}</Text>
-          <Text style={styles.likeCount}>{recipe.creator.likeCount}</Text>
+          <View style={styles.likeBox}>
+            <Text style={styles.likeHeart}><Icon name={recipe.liked?'ios-heart':'ios-heart-outline'} color="#12311C" size={25} /></Text>
+            <Text style={styles.likeCount}>{recipe.creator.likeCount}</Text>
+          </View>
         </View>
         <Image
           resizeMode="cover"
@@ -71,7 +74,10 @@ class Feed extends Component {
         />
         <View style={styles.bottomContainer}>
           <Text style={styles.username}>{recipe.creator.username}</Text>
-          <Text style={styles.createdAt}>{recipe.createdAt.toString()}</Text>
+          <View style={styles.timeBox}>
+            <Text style={styles.createdAt}><Icon name="ios-clock-outline" color="#12311C" size={25} /></Text>
+            <Text style={styles.createdAt}> {recipe.createdAt.toString()}</Text>
+          </View>
         </View>
       </View>
     )
@@ -125,6 +131,14 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     backgroundColor: '#E8E8E8',
   },
+  timeBox:{
+    flexDirection: 'row',
+    alignItems:'center'
+  },
+  likeBox:{
+    flexDirection: 'row',
+    alignItems:'center'
+  }
 });
 
 module.exports = Feed
