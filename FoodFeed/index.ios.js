@@ -11,10 +11,14 @@ import {
   Text,
   View,
   NavigatorIOS,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
+var FBLogin = require('react-native-facebook-login');
+var FBLoginManager = require('NativeModules').FBLoginManager;
 var Feed = require('./Feed.js')
 var Recipe = require('./Recipe.js')
+const BASE_URL = 'https://foodfeed.azurewebsites.net';
 
 class FoodFeed extends Component {
   render() {
@@ -50,24 +54,72 @@ class Main extends Component {
     this.state = { myButtonOpacity: 1 }
   }
   render() {
+      var _this = this;
       return(
-    <View style={styles.container}>
-        <TouchableOpacity onPress={() => this.props.navigator.push({title:'Feed',component:Feed,passProps:{myProp:'foo'}})}
-                          onPressOut={() => this.setState({myButtonOpacity: 1})}>
-          <View style={[styles.button, {opacity: this.state.myButtonOpacity}]}>
-            <Text>Feed</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.props.navigator.push({title:'Recipe',component:Recipe,passProps:{myProp:'foo'}})}
-                          onPressOut={() => this.setState({myButtonOpacity: 1})}>
-          <View style={[styles.button, {opacity: this.state.myButtonOpacity}]}>
-            <Text>Recipe</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.container}>
+          <TouchableOpacity onPress={() => this.props.navigator.push({title:'Feed',component:Feed,passProps:{navigator:this.props.navigator}})}
+                            onPressOut={() => this.setState({myButtonOpacity: 1})}>
+            <View style={[styles.button, {opacity: this.state.myButtonOpacity}]}>
+              <Text>Feed</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigator.push({title:'Recipe',component:Recipe,passProps:{navigator:this.props.navigator}})}
+                            onPressOut={() => this.setState({myButtonOpacity: 1})}>
+            <View style={[styles.button, {opacity: this.state.myButtonOpacity}]}>
+              <Text>Recipe</Text>
+            </View>
+          </TouchableOpacity>
+          <FBLogin style={{ marginBottom: 10, }}
+            permissions={["email","user_friends"]}
+            loginBehavior={FBLoginManager.LoginBehaviors.Native}
+            onLogin={(res)=>this.logIn(res.credentials.token)}
+            onLogout={function(){
+              console.log("Logged out.");
+              _this.setState({ user : null });
+            }}
+            onLoginFound={(res)=>this.logIn(res.credentials.token)}
+            onLoginNotFound={function(){
+              console.log("No user logged in.");
+              _this.setState({ user : null });
+            }}
+            onError={function(data){
+              console.log("ERROR");
+              console.log(data);
+            }}
+            onCancel={function(){
+              console.log("User cancelled.");
+            }}
+            onPermissionsMissing={function(data){
+              console.log("Check permissions!");
+              console.log(data);
+            }}
+          />
+        </View>
+        
       );
   }
+  logIn(access_token){
+    var s = 'grant_type=password&password=test&username=facebookuser:'+access_token;
+    var REQUEST_URL = BASE_URL + "/token"
+    var myHeaders = {"Content-Type": "text/plain; charset=utf-8"};
+    var myInit = { 
+      method: "POST",
+      headers: myHeaders,
+      body:s
+    };
+    console.log(s);    
+    fetch(REQUEST_URL,myInit)
+    .then((response) => response.json())
+    .then((res) => {
+      AsyncStorage.setItem('username', res.userName)
+      AsyncStorage.setItem('loginToken', res.access_token);
+      AsyncStorage.setItem('loginTokenExpires', res[".expires"].toString());
+      console.log(res);
+    })
+    .done();
+  }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -84,8 +136,5 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
-function goToFeed(){
-  console.log("blerf");
-}
 
 AppRegistry.registerComponent('FoodFeed', () => FoodFeed);
