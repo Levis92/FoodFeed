@@ -12,7 +12,6 @@ import {
   Image,
   TabBarIOS
 } from 'react-native';
-var FBLogin = require('react-native-facebook-login');
 
 var MOCK_RECIPE= [
   {id:'123', title: 'Soppa', duration:'35', creator:{username:"Simon",userid:"1234"}, createdAt: new Date(),likeCount:5,image: {full:'http://i.imgur.com/Gze1KMo.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}}
@@ -60,7 +59,6 @@ class Recipe extends Component {
           </Text>
           
         </View>
-        <FBLogin />
       </View>
       
     );  

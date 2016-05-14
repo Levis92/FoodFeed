@@ -5,9 +5,11 @@ import {
   View,
   Image,
   ListView,
-  Dimensions
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+const BASE_URL = 'https://foodfeed.azurewebsites.net';
 
 var MOCK_RECIPES= [
   {id:'123', title: 'Soppa', creator:{username:"Simon",userid:"1234"}, createdAt: "32 min ago",likeCount:5,liked:false,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'https://images.kitchenstories.de/recipeImages/04_25_AmericanApplePie_final.jpg'}},
@@ -29,17 +31,35 @@ class Feed extends Component {
   componentDidMount() {
     this.fetchData();
   }
+  checkLogin(){}
   fetchData () {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(MOCK_RECIPES),
-        loaded: true,
+    AsyncStorage.getItem('loginToken')
+      .then((token) => {
+        if (token) {
+          var REQUEST_URL = BASE_URL + "/api/recipe"
+          myInit = {
+            headers:{"Authorization":"bearer "+token}
+          }
+          console.log(myInit);
+          fetch(REQUEST_URL,myInit)
+            .then((response) => response.json())
+            .then((responseData) => {
+              console.log(responseData);
+              this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(responseData),
+                loaded: true,
+              });
+            })
+            .done();
+        } else {
+          resolve({loggedIn: false});
+        }
       });
   }
   render() {
     if (!this.state.loaded) {
       return this.renderLoadingView();
     }
-          console.log(this.state.dataSource);
     return (
       <ListView
         dataSource={this.state.dataSource}
@@ -61,22 +81,24 @@ class Feed extends Component {
     return(
       <View style={styles.container}>
         <View style={styles.topContainer}>
-          <Text style={styles.title}>{recipe.title}</Text>
+          <Text style={styles.username}>{recipe.User.Name}</Text>
           <View style={styles.likeBox}>
-            <Text style={styles.likeHeart}><Icon name={recipe.liked?'ios-heart':'ios-heart-outline'} color="#12311C" size={25} /></Text>
-            <Text style={styles.likeCount}>{recipe.creator.likeCount}</Text>
+            <Text style={styles.likeHeart}><Icon name={recipe.HasLiked?'ios-heart':'ios-heart-outline'} color="#12311C" size={25} /></Text>
+            <Text style={styles.likeCount}> {recipe.Likes}</Text>
           </View>
         </View>
-        <Image
-          resizeMode="cover"
-          source={{uri: recipe.image.thumbnail}}
-          style={styles.thumbnail}
-        />
+        <TouchableOpacity onPress={()=>{}}>
+          <Image
+            resizeMode="cover"
+            source={{uri: recipe.ImageUrl}}
+            style={styles.thumbnail}
+          />
+        </TouchableOpacity>
         <View style={styles.bottomContainer}>
-          <Text style={styles.username}>{recipe.creator.username}</Text>
+          <Text style={styles.title}>{recipe.Name}</Text>
           <View style={styles.timeBox}>
-            <Text style={styles.createdAt}><Icon name="ios-clock-outline" color="#12311C" size={25} /></Text>
-            <Text style={styles.createdAt}> {recipe.createdAt.toString()}</Text>
+            <Text style={styles.createdAtLogo}><Icon name="ios-clock-outline" color="#12311C" size={25} /></Text>
+            <Text style={styles.createdAt}> {recipe.Created.toString()}</Text>
           </View>
         </View>
       </View>
@@ -111,33 +133,45 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:"space-between",
     paddingLeft:5,
-    paddingRight:5
+    paddingRight:5,
+    overflow:'hidden'
   },
   title: {
-    fontSize: 20,
-    marginBottom: 8,
+    fontSize: 15,
     textAlign: 'center',
     color:"#12311C",
+    fontFamily:"Helvetica Neue"
   },
   username: {
+        fontSize: 15,
     textAlign: 'center',
     color:"#12311C",
+    fontFamily:"Helvetica Neue"
   },
   thumbnail: {
     flex: 8,
     height:300
   },
   listView: {
-    paddingTop: 20,
+    paddingTop: 70,
     backgroundColor: '#E8E8E8',
   },
   timeBox:{
     flexDirection: 'row',
-    alignItems:'center'
+    alignItems:'center',
   },
   likeBox:{
     flexDirection: 'row',
     alignItems:'center'
+  },
+  likeHeart:{
+    lineHeight:28
+  },
+  createdAt:{
+    fontFamily:"Helvetica Neue"
+  },
+  createdAtLogo:{
+    lineHeight:28
   }
 });
 
