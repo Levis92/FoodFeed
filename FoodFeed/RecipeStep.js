@@ -4,36 +4,45 @@ import {
   Text,
   View,
   Image,
-  TabBarIOS
+  ListView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-class RecipeAbout extends Component {
+class RecipeStep extends Component {
   constructor(props) {
     super(props);
-    console.log('pprops', props);
+    this.state = {
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      })
+    };
   }
-  render() {
+  componentDidMount() {
+    this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(this.props.steps.Steps)
+    });
+  }
+  render() { 
     return (
-        <View style={styles.container}>
-            <View style={styles.flowRight}>
-                <Text style={styles.recipeName}>
-                    {this.props.recipe.Name}
-                </Text>
-                <Text style={styles.duration}>
-                    <Icon name="ios-clock-outline" /> {this.props.recipe.PrepTime / 60 } min
-                </Text>
-            </View>
-            <Text style={styles.description}>
-                {this.props.recipe.Description}
-            </Text>
-        </View>
-      
-    );  
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={(step)=>this.renderStep(step)}
+        style={styles.listView}
+      />
+    ); 
+  }
+  renderStep(step) {
+    return(
+      <View style={styles.container}>
+        <Text style={styles.instructions}>
+            {step.Description}
+        </Text>
+      </View>
+    )
   }
 }
 
-module.exports = RecipeAbout;
+module.exports = RecipeStep;
 
 const styles = StyleSheet.create({
   tab: {
@@ -82,10 +91,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     margin: 10,
     flex: 4
-  },
-  description: {
-      fontSize: 10,
-      textAlign: 'center',
   },
   instructions: {
     textAlign: 'center',

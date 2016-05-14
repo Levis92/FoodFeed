@@ -4,28 +4,49 @@ import {
   Text,
   View,
   Image,
+  ListView,
   TabBarIOS
 } from 'react-native';
 
-var MOCK_INGREDIENTS = [
-    {name: 'Kaffe', amount: '2 dl'},
-    {name: 'Milk', amount:'1 l'}
-    ]
 class RecipeIngredients extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        ingredients: MOCK_INGREDIENTS
+        dataSource: new ListView.DataSource({
+            rowHasChanged: (row1, row2) => row1 !== row2,
+        })
+        
     };
   }
-  render() {
-      var ingredient = this.state.ingredients[0];
-    return (
-      <View style={styles.container}>
-        <Text>
-            {ingredient.name}
+componentDidMount() {
+    this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(this.props.ingredients)
+    });
+  } 
+  renderIngredient(ingredient){
+    return(
+      <View style={styles.container}>   
+        <Text style={styles.amount}>
+            {ingredient.Amount}
+        </Text>
+        <Text style={styles.unit}>
+            {ingredient.Unit}
+        </Text>
+        <Text style={styles.instructions}>
+            {ingredient.Name}
         </Text>
       </View>
+    )
+  }
+  render() {
+      console.log("ingredients", this.props);
+      
+    return (
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={(ingredient)=>this.renderIngredient(ingredient)}
+        style={styles.listView}
+      />
       
     );  
   }
@@ -63,7 +84,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    
+    flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
@@ -85,5 +106,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+    flex:4
+  },
+  amount: {
+      textAlign: 'center',
+      flex: 2,
+  },
+  unit: {
+      flex:2,
   }
+  
 });
