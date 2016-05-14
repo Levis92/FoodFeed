@@ -80,12 +80,11 @@ const styles = StyleSheet.create({
   recipeName: {
     fontSize: 20,
     textAlign: 'left',
-    margin: 10,
     flex: 4
   },
   description: {
-      fontSize: 10,
-      textAlign: 'center',
+      marginTop: 10, 
+      textAlign: 'left'
   },
   instructions: {
     textAlign: 'center',

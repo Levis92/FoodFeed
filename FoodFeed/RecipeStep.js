@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     flex: 1,
     
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+backgroundColor: '#b6d7a8'
   },
   flowRight:{
     flexDirection: 'row',
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     flex: 4
   },
   instructions: {
-    textAlign: 'center',
+    textAlign: 'left',
     color: '#333333',
     marginBottom: 5,
   }
