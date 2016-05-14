@@ -9,6 +9,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+var Recipe = require('./Recipe.js')
 const BASE_URL = 'https://foodfeed.azurewebsites.net';
 
 var MOCK_RECIPES= [
@@ -84,7 +85,7 @@ class Feed extends Component {
             <Text style={styles.likeCount}> {recipe.Likes}</Text>
           </View>
         </View>
-        <TouchableOpacity onPress={()=>{this.props.navigator.push({title:'Recipe',component:Feed,passProps:{recipe:recipe.Id}})}}>
+        <TouchableOpacity onPress={()=>{this.props.navigator.push({title:'Recipe',component:Recipe,passProps:{recipe:recipe.Id}})}}>
           <Image
             resizeMode="cover"
             source={{uri: recipe.ImageUrl}}
