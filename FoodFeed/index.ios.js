@@ -13,7 +13,8 @@ import {
   NavigatorIOS,
   TouchableOpacity
 } from 'react-native';
-var Feed = require('./feed.js')
+var Feed = require('./Feed.js')
+var Recipe = require('./Recipe.js')
 
 class FoodFeed extends Component {
   render() {
@@ -57,7 +58,7 @@ class Main extends Component {
             <Text>Feed</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.props.navigator.push({title:'Feed',component:Feed,passProps:{myProp:'foo'}})}
+        <TouchableOpacity onPress={() => this.props.navigator.push({title:'Recipe',component:Recipe,passProps:{myProp:'foo'}})}
                           onPressOut={() => this.setState({myButtonOpacity: 1})}>
           <View style={[styles.button, {opacity: this.state.myButtonOpacity}]}>
             <Text>Recipe</Text>
