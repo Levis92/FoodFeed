@@ -183,7 +183,7 @@ class Feed extends Component {
             <Text style={styles.likeCount}> {recipe.Likes}</Text>
           </View>
         </View>
-        <TouchableOpacity onPress={()=>{this.props.navigator.push({title:'Recipe',component:Recipe,passProps:{recipe:recipe.Id}})}}>
+        <TouchableOpacity onPress={()=>{this.props.navigator.push({tintColor:'#fff',titleTextColor:'#fff',barTintColor:'#2E7E41',title:'Recipe',component:Recipe,passProps:{recipe:recipe.Id}})}}>
           <Image
             resizeMode="cover"
             source={{uri: recipe.ImageUrl}}

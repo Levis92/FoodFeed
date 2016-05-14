@@ -30,7 +30,8 @@ class FoodFeed extends Component {
             component: Main,
             title: 'Welcome!',
             passProps: { myProp: 'foo' },
-            navigationBarHidden:true
+            navigationBarHidden:true,
+            barTintColor:'#2E7E41'
           }}
         />
       );
@@ -108,7 +109,7 @@ class Main extends Component {
       AsyncStorage.setItem('username', res.userName)
       AsyncStorage.setItem('loginToken', res.access_token);
       AsyncStorage.setItem('loginTokenExpires', res[".expires"].toString());
-      this.props.navigator.push({title:'Feed',component:Feed,passProps:{navigationBarHidden:false,navigator:this.props.navigator,feedType:'feed',}},0);
+      this.props.navigator.push({tintColor:'#fff',titleTextColor:'#fff',barTintColor:'#2E7E41',title:'Feed',component:Feed,passProps:{navigationBarHidden:false,navigator:this.props.navigator,feedType:'feed',}},0);
   })
     .done();
   }
