@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 var MOCK_RECIPE= [
-  {id:'123', title: 'Soppa', duration:'35', creator:{username:"Simon",userid:"1234"}, createdAt: new Date(),likeCount:5,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}}
+  {id:'123', title: 'Soppa', duration:'35', creator:{username:"Simon",userid:"1234"}, createdAt: new Date(),likeCount:5,image: {full:'http://i.imgur.com/Gze1KMo.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}}
 ];
 
 class Recipe extends Component {
@@ -30,7 +30,10 @@ class Recipe extends Component {
         <Image style={styles.image} source={{uri: recipe.image.full}}>
           <View style={styles.backdropView}>
             <Text style={styles.user}>
-              @ {recipe.creator.username}
+              @{recipe.creator.username}
+            </Text>
+            <Text style={styles.heart}>
+              Hj
             </Text>
           </View>
         </Image>
@@ -44,7 +47,7 @@ class Recipe extends Component {
         </View>
       </View>
       
-    );
+    );  
   }
 }
 
@@ -60,12 +63,19 @@ const styles = StyleSheet.create({
     height: 120,
     width: 320,
     backgroundColor: 'rgba(0,0,0,0)',
+    flexDirection: 'row',
+    alignSelf: 'stretch'
   },
   user: {
     fontSize: 20,
     textAlign: 'left',
     backgroundColor: 'rgba(0,0,0,0)',
-    color: 'black'
+    color: 'black',
+    flex: 4
+  },
+  heart: {
+    textAlign: 'right',
+    flex:1
   },
   container: {
     flex: 1,
