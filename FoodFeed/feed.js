@@ -3,7 +3,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  ListView,
 } from 'react-native';
 
 var MOCK_RECIPES= [
@@ -13,21 +14,37 @@ var MOCK_RECIPES= [
   {id:'126', title: 'Säng', creator:{username:"Erik",userid:"1237"}, createdAt: new Date(),likeCount:1,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}},
 ];
 
-class FoodFeed extends Component {
+class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipes: MOCK_RECIPES,
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
+      loaded: false,
     };
   }
   componentDidMount() {
     this.fetchData();
   }
+  fetchData () {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(MOCK_RECIPES),
+        loaded: true,
+      });
+  }
   render() {
-    if (!this.state.recipes) {
+    if (!this.state.loaded) {
       return this.renderLoadingView();
     }
-    return this.renderRecipes();
+          console.log(this.state.dataSource);
+    return (
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderRecipe}
+        style={styles.listView}
+      />
+    );
   }
   renderLoadingView() {
     return (
@@ -38,9 +55,8 @@ class FoodFeed extends Component {
       </View>
     );
   }
-  renderRecipes() {
-    var recipe = this.state.recipes[0];
-    return (
+  renderRecipe(recipe) {
+    return(
       <View style={styles.container}>
         <Image
           source={{uri: recipe.image.thumbnail}}
@@ -51,30 +67,36 @@ class FoodFeed extends Component {
           <Text style={styles.username}>{recipe.creator.username}</Text>
         </View>
       </View>
-    );
-  }
-  fetchData () {
-  
+    )
   }
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    backgroundColor: '#F5FCFF',
   },
   rightContainer: {
-      flex: 1,
-    },
-    title: {
-      fontSize: 20,
-      marginBottom: 8,
-      textAlign: 'center',
-    },
-    year: {
-      textAlign: 'center',
-    },
+    flex: 1,
+  },
+  title: {
+    fontSize: 20,
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  username: {
+    textAlign: 'center',
+  },
+  thumbnail: {
+    width: 53,
+    height: 81,
+  },
+  listView: {
+    paddingTop: 20,
+    backgroundColor: '#F5FCFF',
+  },
 });
 
-module.exports = FoodFeed
+module.exports = Feed
