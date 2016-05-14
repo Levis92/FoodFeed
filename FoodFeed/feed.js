@@ -5,6 +5,7 @@ import {
   View,
   Image,
   ListView,
+  Dimensions
 } from 'react-native';
 
 var MOCK_RECIPES= [
@@ -58,13 +59,18 @@ class Feed extends Component {
   renderRecipe(recipe) {
     return(
       <View style={styles.container}>
+        <View style={styles.topContainer}>
+          <Text style={styles.title}>{recipe.title}</Text>
+          <Text style={styles.likeCount}>{recipe.creator.likeCount}</Text>
+        </View>
         <Image
+          resizeMode="cover"
           source={{uri: recipe.image.thumbnail}}
           style={styles.thumbnail}
         />
-        <View style={styles.rightContainer}>
-          <Text style={styles.title}>{recipe.title}</Text>
+        <View style={styles.bottomContainer}>
           <Text style={styles.username}>{recipe.creator.username}</Text>
+          <Text style={styles.createdAt}>{recipe.createdAt.toString()}</Text>
         </View>
       </View>
     )
@@ -73,13 +79,29 @@ class Feed extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#2E7E41',
+    marginBottom:10,
+    height:360,
+    position: 'relative',
+    alignItems: 'stretch',
+    overflow:'hidden'
   },
-  rightContainer: {
+  topContainer: {
     flex: 1,
+    flexDirection: 'row',
+    alignItems:'center',
+    justifyContent:"space-between",
+    paddingLeft:5,
+    paddingRight:5
+  },
+  bottomContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems:'center',
+    justifyContent:"space-between",
+    paddingLeft:5,
+    paddingRight:5
   },
   title: {
     fontSize: 20,
@@ -90,8 +112,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   thumbnail: {
-    width: 53,
-    height: 81,
+    flex: 5,
+    height:300
   },
   listView: {
     paddingTop: 20,

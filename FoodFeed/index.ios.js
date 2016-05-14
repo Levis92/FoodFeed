@@ -23,7 +23,7 @@ class FoodFeed extends Component {
           style={styles.container}
           initialRoute={{
             component: Main,
-            title: 'My  Title',
+            title: 'Main',
             passProps: { myProp: 'foo' },
           }}
         />
