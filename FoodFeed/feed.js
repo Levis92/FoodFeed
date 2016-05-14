@@ -12,6 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 var Recipe = require('./Recipe.js')
+var moments = require('./moments.js')
 const BASE_URL = 'https://foodfeed.azurewebsites.net';
 
 class Feed extends Component {
@@ -129,6 +130,7 @@ class Feed extends Component {
           systemIcon="recents"
           selected={this.state.selectedTab === 'feed'}
           onPress={() => {
+            this.props.feedType = 'feed';
             this.setState({
               selectedTab: 'feed',
             });
@@ -144,6 +146,7 @@ class Feed extends Component {
           systemIcon="favorites"
           selected={this.state.selectedTab === 'favorites'}
           onPress={() => {
+            this.props.feedType = 'favorites';
             this.setState({
               selectedTab: 'favorites',
             });
@@ -194,7 +197,7 @@ class Feed extends Component {
               <Text style={styles.retweet}><FaIcon name="retweet" color="{recipe.HasReposted?'#fff':'#12311C'}" size={25} /> </Text>
             </TouchableOpacity>
             <Text style={styles.createdAtLogo}><Icon name="ios-clock-outline" color="#12311C" size={25} /></Text>
-            <Text style={styles.createdAt}> {recipe.Created.toString()}</Text>
+            <Text style={styles.createdAt}> {moments(recipe.Created).fromNow()}</Text>
           </View>
         </View>
       </View>
