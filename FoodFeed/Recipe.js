@@ -18,6 +18,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 var FBLogin = require('react-native-facebook-login');
 var RecipeIngredients = require('./RecipeIngredients.js');
 var RecipeAbout = require('./RecipeAbout.js');
+var RecipeStep = require('./RecipeStep.js');
 const BASE_URL = 'https://foodfeed.azurewebsites.net';
 var MOCK_RECIPE= [
   {id:'123', description:'En mustig soppa med mycket grönsaker', title: 'Soppa', duration:'35', creator:{username:"Simon",userid:"1234"}, createdAt: new Date(),likeCount:5,image: {full:'http://i.imgur.com/Gze1KMo.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}}
@@ -28,6 +29,7 @@ var MOCK_RECIPE= [
 class Recipe extends Component {
   constructor(props) {
     super(props);
+    console.log("props in recipe", props);
     this.state = {
       selectedTab: 'aboutTab',
       likeIcon: 'ios-heart-outline',
@@ -81,11 +83,14 @@ class Recipe extends Component {
   }
     
   _renderIngredients() {
-    this.state.innerContent = <RecipeIngredients />;
+    this.state.innerContent = <RecipeIngredients ingredients={this.state.recipe.Ingredients} />;
     this.forceUpdate();  
-    console.log("render ingredients");
   }
-  
+  _renderStep() {
+    this.state.innerContent = <RecipeStep steps={this.state.recipe} />
+    this.forceUpdate();
+    
+  } 
   render() {
     if(!this.state.recipe){
           console.log('res is null: ',this.state);
@@ -96,7 +101,7 @@ class Recipe extends Component {
         <Image style={styles.image} source={{uri: this.state.recipe.ImageUrl}}>
           <View style={styles.backdropView}>
             <Text style={styles.user}>
-              @{this.state.recipe.User.Name}
+              {this.state.recipe.User.Name}
             </Text>
             <TouchableOpacity onPress={() => this._setLike()}>
               <Text style={styles.likeHeart}>
@@ -116,7 +121,7 @@ class Recipe extends Component {
               ingredients
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.tab}>
+          <TouchableOpacity onPress={() => this._renderStep()} style={styles.tab}>
             <Text style={styles.tab}>
               steps
             </Text>
