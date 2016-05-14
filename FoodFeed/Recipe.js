@@ -11,6 +11,10 @@ import {
   View,
   Image
 } from 'react-native';
+const FBSDK = require('react-native-fbsdk');
+const {
+  LoginButton,
+} = FBSDK;
 
 var MOCK_RECIPE= [
   {id:'123', title: 'Soppa', duration:'35', creator:{username:"Simon",userid:"1234"}, createdAt: new Date(),likeCount:5,image: {full:'http://i.imgur.com/Gze1KMo.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}}
@@ -44,7 +48,24 @@ class Recipe extends Component {
           <Text style={styles.duration}>
             {recipe.duration} min
           </Text>
+          
         </View>
+        <View style={styles.container}>
+                <LoginButton
+          publishPermissions={["publish_actions"]}
+          onLoginFinished={
+            (error, result) => {
+              if (error) {
+                alert("Login failed with error: " + result.error);
+              } else if (result.isCancelled) {
+                alert("Login was cancelled");
+              } else {
+                alert("Login was successful with permissions: " + result.grantedPermissions)
+              }
+            }
+          }
+          onLogoutFinished={() => alert("User logged out")}/>
+          </View>
       </View>
       
     );  
