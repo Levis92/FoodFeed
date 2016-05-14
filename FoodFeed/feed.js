@@ -7,11 +7,12 @@ import {
   ListView,
   Dimensions
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 var MOCK_RECIPES= [
-  {id:'123', title: 'Soppa', creator:{username:"Simon",userid:"1234"}, createdAt: new Date(),likeCount:5,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}},
-  {id:'124', title: 'Sten', creator:{username:"Pär",userid:"1235"}, createdAt: new Date(),likeCount:10,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}},
-  {id:'125', title: 'Sture', creator:{username:"John",userid:"1236"}, createdAt: new Date(),likeCount:17,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}},
+  {id:'123', title: 'Soppa', creator:{username:"Simon",userid:"1234"}, createdAt: "32 min ago",likeCount:5,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'https://images.kitchenstories.de/recipeImages/04_25_AmericanApplePie_final.jpg'}},
+  {id:'124', title: 'Sten', creator:{username:"Pär",userid:"1235"}, createdAt: "50 min ago",likeCount:10,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'https://images.kitchenstories.de/recipeImages/04_25_AmericanApplePie_final.jpg'}},
+  {id:'125', title: 'Sture', creator:{username:"John",userid:"1236"}, createdAt: "3 days ago",likeCount:17,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'https://images.kitchenstories.de/recipeImages/04_25_AmericanApplePie_final.jpg'}},
   {id:'126', title: 'Säng', creator:{username:"Erik",userid:"1237"}, createdAt: new Date(),likeCount:1,image: {full:'http://i.imgur.com/UePbdph.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}},
 ];
 
@@ -70,6 +71,7 @@ class Feed extends Component {
         />
         <View style={styles.bottomContainer}>
           <Text style={styles.username}>{recipe.creator.username}</Text>
+          <Icon name="ios-american-football" size={30} color="#4F8EF7" />
           <Text style={styles.createdAt}>{recipe.createdAt.toString()}</Text>
         </View>
       </View>
@@ -80,12 +82,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#2E7E41',
+    backgroundColor: '#b6d7a8',
     marginBottom:10,
     height:360,
     position: 'relative',
     alignItems: 'stretch',
-    overflow:'hidden'
+    overflow:'hidden',
+    borderBottomWidth:1,
+    borderBottomColor:"#989898",
+    
   },
   topContainer: {
     flex: 1,
@@ -107,17 +112,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 8,
     textAlign: 'center',
+    color:"#12311C",
   },
   username: {
     textAlign: 'center',
+    color:"#12311C",
   },
   thumbnail: {
-    flex: 5,
+    flex: 8,
     height:300
   },
   listView: {
     paddingTop: 20,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#E8E8E8',
   },
 });
 
