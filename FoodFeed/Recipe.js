@@ -12,6 +12,7 @@ import {
   Image,
   TabBarIOS
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 var FBLogin = require('react-native-facebook-login');
 
 var MOCK_RECIPE= [
