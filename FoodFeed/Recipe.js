@@ -18,7 +18,7 @@ var FBLogin = require('react-native-facebook-login');
 var RecipeIngredients = require('./RecipeIngredients.js');
 var RecipeAbout = require('./RecipeAbout.js');
 var MOCK_RECIPE= [
-  {id:'123', title: 'Soppa', duration:'35', creator:{username:"Simon",userid:"1234"}, createdAt: new Date(),likeCount:5,image: {full:'http://i.imgur.com/Gze1KMo.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}}
+  {id:'123', description:'En mustig soppa med mycket grönsaker', title: 'Soppa', duration:'35', creator:{username:"Simon",userid:"1234"}, createdAt: new Date(),likeCount:5,image: {full:'http://i.imgur.com/Gze1KMo.jpg',thumbnail: 'http://i.imgur.com/UePbdph.jpg'}}
 ];
 
 
