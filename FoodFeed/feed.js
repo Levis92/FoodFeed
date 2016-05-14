@@ -57,7 +57,7 @@ class Feed extends Component {
   }
   renderRecipe(recipe) {
     return(
-      <View>
+      <View style={styles.container}>
         <Image
           source={{uri: recipe.image.thumbnail}}
           style={styles.thumbnail}
@@ -78,10 +78,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-    thumbnail: {
-    width: 53,
-    height: 81,
-  },
   rightContainer: {
     flex: 1,
   },
@@ -92,6 +88,10 @@ const styles = StyleSheet.create({
   },
   username: {
     textAlign: 'center',
+  },
+  thumbnail: {
+    width: 53,
+    height: 81,
   },
   listView: {
     paddingTop: 20,
