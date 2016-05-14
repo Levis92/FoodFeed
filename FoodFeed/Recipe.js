@@ -9,7 +9,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  TabBarIOS
 } from 'react-native';
 var FBLogin = require('react-native-facebook-login');
 
@@ -21,6 +22,7 @@ class Recipe extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedTab: 'aboutTab',  
       recipe: MOCK_RECIPE
     };
   }
@@ -38,6 +40,17 @@ class Recipe extends Component {
             </Text>
           </View>
         </Image>
+        <View style={styles.flowRight}>
+          <Text style={styles.tab}>
+            about
+          </Text>
+          <Text style={styles.tab}>
+            ingredients
+          </Text>
+          <Text style={styles.tab}>
+            steps
+          </Text>
+        </View>
         <View style={styles.flowRight}>
           <Text style={styles.recipeName}>
             {recipe.title}
@@ -57,6 +70,10 @@ class Recipe extends Component {
 module.exports = Recipe;
 
 const styles = StyleSheet.create({
+  tab: {
+    flex:1,
+    textAlign: "center"
+  },
   image: {
     paddingTop: 70,
     width: 375,
