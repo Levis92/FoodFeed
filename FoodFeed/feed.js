@@ -71,7 +71,6 @@ class Feed extends Component {
         />
         <View style={styles.bottomContainer}>
           <Text style={styles.username}>{recipe.creator.username}</Text>
-          <Icon name="ios-american-football" size={30} color="#4F8EF7" />
           <Text style={styles.createdAt}>{recipe.createdAt.toString()}</Text>
         </View>
       </View>
