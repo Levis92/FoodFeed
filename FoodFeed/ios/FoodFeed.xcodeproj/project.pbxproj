@@ -21,7 +21,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-<<<<<<< HEAD
 		78C22CC0BCA445789BBAF785 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 499828CEEC644A5280A1B254 /* libRNVectorIcons.a */; };
 		C88DBE63FE694AACAF6B4070 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9CB2D78F8804BBBB89903BC /* Entypo.ttf */; };
 		124D087C78B44A168861EF91 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 527648F5A3164D0AAB725753 /* EvilIcons.ttf */; };
@@ -31,10 +30,8 @@
 		307A962DCEA7415D8FA50916 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EEED8D95CCC748839766351A /* MaterialIcons.ttf */; };
 		6017BF4D3EE74BEAB234F500 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 644BFB36CDE6458389C6BB2D /* Octicons.ttf */; };
 		0588DB6EEBC749B28A8BC771 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B9CFC1CEA4804CA18CF1A198 /* Zocial.ttf */; };
-=======
 		C09EDCA40FAA1AE40E0C661E /* libPods-FoodFeedTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA984F145865E23DFEF9A819 /* libPods-FoodFeedTests.a */; };
 		E900FF9F935BFEEFD51B3D48 /* libPods-FoodFeed.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7DD8043D545AECAF2A5101 /* libPods-FoodFeed.a */; };
->>>>>>> f0d98a160944e3b03781a8c919f336e2ed14ca97
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,7 +133,6 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FoodFeed/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FoodFeed/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = FoodFeed/main.m; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = ../node_modules/react-native/React/React.xcodeproj; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = ../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = ../node_modules/react-native/Libraries/Text/RCTText.xcodeproj; sourceTree = "<group>"; };
@@ -150,7 +146,6 @@
 		EEED8D95CCC748839766351A /* MaterialIcons.ttf */ = {isa = PBXFileReference; name = "MaterialIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		644BFB36CDE6458389C6BB2D /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		B9CFC1CEA4804CA18CF1A198 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-=======
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		367D0B48E1B6B1CA072377D2 /* Pods-FoodFeedTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodFeedTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FoodFeedTests/Pods-FoodFeedTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3A7DD8043D545AECAF2A5101 /* libPods-FoodFeed.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FoodFeed.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,7 +155,6 @@
 		87E6CF8821196B592D1CB0D5 /* Pods-FoodFeed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodFeed.release.xcconfig"; path = "Pods/Target Support Files/Pods-FoodFeed/Pods-FoodFeed.release.xcconfig"; sourceTree = "<group>"; };
 		A45CCA686514B326AC72453A /* Pods-FoodFeedTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodFeedTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FoodFeedTests/Pods-FoodFeedTests.release.xcconfig"; sourceTree = "<group>"; };
 		BA984F145865E23DFEF9A819 /* libPods-FoodFeedTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FoodFeedTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
->>>>>>> f0d98a160944e3b03781a8c919f336e2ed14ca97
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,11 +180,8 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-<<<<<<< HEAD
 				78C22CC0BCA445789BBAF785 /* libRNVectorIcons.a in Frameworks */,
-=======
 				E900FF9F935BFEEFD51B3D48 /* libPods-FoodFeed.a in Frameworks */,
->>>>>>> f0d98a160944e3b03781a8c919f336e2ed14ca97
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,12 +344,9 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* FoodFeedTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
-<<<<<<< HEAD
 				86024CBBF4CF4F44861DFA54 /* Resources */,
-=======
 				4FB1F703CE0C210E67033373 /* Pods */,
 				25A4558307D73ACDB25EA9FD /* Frameworks */,
->>>>>>> f0d98a160944e3b03781a8c919f336e2ed14ca97
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
