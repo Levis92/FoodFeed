@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
@@ -99,18 +100,18 @@ const styles = StyleSheet.create({
   recipeName: {
     fontSize: 20,
     textAlign: 'left',
-    margin: 10,
     flex: 4
   },
   instructions: {
-    textAlign: 'center',
+    textAlign: 'left',
     color: '#333333',
     marginBottom: 5,
     flex:4
   },
   amount: {
-      textAlign: 'center',
-      flex: 2,
+      textAlign: 'left',
+      fontWeight: 'bold',
+      flex: 2
   },
   unit: {
       flex:2,

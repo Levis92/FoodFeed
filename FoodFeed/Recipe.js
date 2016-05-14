@@ -112,18 +112,18 @@ class Recipe extends Component {
         </Image>
         <View style={styles.flowRight}>
           <TouchableOpacity onPress={() => this._renderAbout()} style={styles.tab}>
-            <Text>
-              about
+            <Text style={styles.tab}>
+              About
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => this._renderIngredients()} style={styles.tab}>
             <Text style={styles.tab}>
-              ingredients
+              Ingredients
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => this._renderStep()} style={styles.tab}>
             <Text style={styles.tab}>
-              steps
+              Steps
             </Text>
           </TouchableOpacity>
         </View>
@@ -138,6 +138,8 @@ module.exports = Recipe;
 
 const styles = StyleSheet.create({
   tab: {
+    height: 30,
+    fontSize: 20,
     flex:1,
     alignSelf:  "stretch"
   },
@@ -185,7 +187,7 @@ const styles = StyleSheet.create({
     flex: 4
   },
   instructions: {
-    textAlign: 'center',
+    textAlign: 'left',
     color: '#333333',
     marginBottom: 5,
   }
