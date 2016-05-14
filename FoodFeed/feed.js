@@ -6,7 +6,8 @@ import {
   Image,
   ListView,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  TabBarIOS
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
@@ -20,6 +21,7 @@ class Feed extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      selectedTab:'feed',
       loaded: false,
     };
   }
@@ -92,19 +94,69 @@ class Feed extends Component {
         } else {
           resolve({loggedIn: false});
         }
-      });
-      
+      });  
+  }
+  repostRecipe(recipe) {
+    recipe.HasReposted = true;
+    this.forceUpdate();
+    AsyncStorage.getItem('loginToken')
+      .then((token) => {
+        if (token) {
+          var REQUEST_URL = BASE_URL + "/api/recipe/"+recipe.Id+"/repost";
+          myInit = {
+            method:"POST",
+            headers:{"Authorization":"bearer "+token}
+          }
+          fetch(REQUEST_URL,myInit)
+            .then((response) => {
+            })
+            .done();
+        } else {
+          resolve({loggedIn: false});
+        }
+      });  
   }
   render() {
     if (!this.state.loaded) {
       return this.renderLoadingView();
     }
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={(recipe)=>this.renderRecipe(recipe)}
-        style={styles.listView}
-      />
+      <TabBarIOS
+        tintColor="white"
+        barTintColor="#2E7E41">
+        <TabBarIOS.Item
+          title="feed"
+          systemIcon="recents"
+          selected={this.state.selectedTab === 'feed'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'feed',
+            });
+          }}>
+          {(<ListView
+            dataSource={this.state.dataSource}
+            renderRow={(recipe)=>this.renderRecipe(recipe)}
+            style={styles.listView}
+          />)}
+        </TabBarIOS.Item>
+        <TabBarIOS.Item
+          title="favorites"
+          systemIcon="favorites"
+          selected={this.state.selectedTab === 'favorites'}
+          onPress={() => {
+            this.setState({
+              selectedTab: 'favorites',
+            });
+          }}>
+          {(<ListView
+            dataSource={this.state.dataSource}
+            renderRow={(recipe)=>this.renderRecipe(recipe)}
+            style={styles.listView}
+          />)}
+        </TabBarIOS.Item>
+      </TabBarIOS>
+      
+     
     );
   }
   renderLoadingView() {
@@ -138,7 +190,9 @@ class Feed extends Component {
         <View style={styles.bottomContainer}>
           <Text style={styles.title}>{recipe.Name}</Text>
           <View style={styles.timeBox}>
-            <Text style={styles.retweet}><FaIcon name="retweet" color="#12311C" size={25} /> </Text>
+            <TouchableOpacity onPress={()=>{this.repostRecipe(recipe)}}>
+              <Text style={styles.retweet}><FaIcon name="retweet" color="{recipe.HasReposted?'#fff':'#12311C'}" size={25} /> </Text>
+            </TouchableOpacity>
             <Text style={styles.createdAtLogo}><Icon name="ios-clock-outline" color="#12311C" size={25} /></Text>
             <Text style={styles.createdAt}> {recipe.Created.toString()}</Text>
           </View>
@@ -195,7 +249,7 @@ const styles = StyleSheet.create({
     height:300
   },
   listView: {
-    paddingTop: 70,
+    paddingTop: 0,
     backgroundColor: '#E8E8E8',
   },
   timeBox:{
