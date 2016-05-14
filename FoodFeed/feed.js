@@ -31,7 +31,6 @@ class Feed extends Component {
   componentDidMount() {
     this.fetchData();
   }
-  checkLogin(){}
   fetchData () {
     AsyncStorage.getItem('loginToken')
       .then((token) => {
@@ -40,11 +39,9 @@ class Feed extends Component {
           myInit = {
             headers:{"Authorization":"bearer "+token}
           }
-          console.log(myInit);
           fetch(REQUEST_URL,myInit)
             .then((response) => response.json())
             .then((responseData) => {
-              console.log(responseData);
               this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(responseData),
                 loaded: true,
@@ -63,7 +60,7 @@ class Feed extends Component {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={this.renderRecipe}
+        renderRow={(recipe)=>this.renderRecipe(recipe)}
         style={styles.listView}
       />
     );
@@ -87,7 +84,7 @@ class Feed extends Component {
             <Text style={styles.likeCount}> {recipe.Likes}</Text>
           </View>
         </View>
-        <TouchableOpacity onPress={()=>{}}>
+        <TouchableOpacity onPress={()=>{this.props.navigator.push({title:'Recipe',component:Feed,passProps:{recipe:recipe.Id}})}}>
           <Image
             resizeMode="cover"
             source={{uri: recipe.ImageUrl}}
@@ -143,7 +140,7 @@ const styles = StyleSheet.create({
     fontFamily:"Helvetica Neue"
   },
   username: {
-        fontSize: 15,
+    fontSize: 15,
     textAlign: 'center',
     color:"#12311C",
     fontFamily:"Helvetica Neue"

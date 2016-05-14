@@ -57,13 +57,13 @@ class Main extends Component {
       var _this = this;
       return(
         <View style={styles.container}>
-          <TouchableOpacity onPress={() => this.props.navigator.push({title:'Feed',component:Feed,passProps:{myProp:'foo'}})}
+          <TouchableOpacity onPress={() => this.props.navigator.push({title:'Feed',component:Feed,passProps:{navigator:this.props.navigator}})}
                             onPressOut={() => this.setState({myButtonOpacity: 1})}>
             <View style={[styles.button, {opacity: this.state.myButtonOpacity}]}>
               <Text>Feed</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigator.push({title:'Recipe',component:Recipe,passProps:{myProp:'foo'}})}
+          <TouchableOpacity onPress={() => this.props.navigator.push({title:'Recipe',component:Recipe,passProps:{navigator:this.props.navigator}})}
                             onPressOut={() => this.setState({myButtonOpacity: 1})}>
             <View style={[styles.button, {opacity: this.state.myButtonOpacity}]}>
               <Text>Recipe</Text>
